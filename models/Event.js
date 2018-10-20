@@ -22,8 +22,14 @@ const EventSchema = new Schema({
   allDay: {
     type: Boolean,
     default: false,
+  },
+  event_type: {
+    type: [{
+      type: String,
+      enum: ['away', 'task']
+    }],
+    default: ['task']
   }
 });
-// person name task date
 
 module.exports = mongoose.model('Events', EventSchema);
