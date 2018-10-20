@@ -27,12 +27,9 @@ const EventSchema = new Schema({
     default: false,
   },
   event_type: {
-    type: [{
-      type: String,
-      enum: ['away', 'task']
-    }],
-    default: ['task']
-  }
+    type: String,
+    default: 'task',
+  },
 });
 
 module.exports = mongoose.model('Events', EventSchema);
