@@ -16,6 +16,9 @@ const EventSchema = new Schema({
   start: {
     type: String,
   },
+  end: {
+    type: String,
+  },
   task: {
     type: String,
   },
