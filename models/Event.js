@@ -30,6 +30,9 @@ const EventSchema = new Schema({
     type: String,
     default: 'task',
   },
+  date_range: {
+    type: Array,
+  },
 });
 
 module.exports = mongoose.model('Events', EventSchema);
