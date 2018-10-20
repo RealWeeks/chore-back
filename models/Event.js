@@ -14,7 +14,7 @@ const EventSchema = new Schema({
     default: Date.now
   },
   start: {
-    type: Date,
+    type: String,
   },
   task: {
     type: String,
