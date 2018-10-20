@@ -9,9 +9,6 @@ exports.get_events = function(req, res) {
   });
 };
 
-
-
-
 exports.create_event = function(req, res) {
   let new_event = new Event(req.body);
   new_event.save(function(err, event) {

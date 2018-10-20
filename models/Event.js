@@ -3,26 +3,27 @@ const Schema = mongoose.Schema;
 
 
 const EventSchema = new Schema({
-  title: {
+  person: {
     type: String,
   },
-  description: {
+  name: {
     type: String,
   },
   created: {
     type: Date,
     default: Date.now
   },
-  start: {
+  date: {
     type: Date,
   },
-  end: {
-    type: Date,
+  task: {
+    type: String,
   },
   allDay: {
     type: Boolean,
     default: false,
   }
 });
+// person name task date
 
 module.exports = mongoose.model('Events', EventSchema);
