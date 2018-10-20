@@ -16,48 +16,32 @@ exports.get_events = function(req, res) {
 };
 
 exports.create_event = function(req, res) {
-  // { person: 'Adam',
-  // start: '10-01-2018',
-  // end: '10-03-2018',
-  // allDay: true,
-  // event_type: 'away' }
   if (req.body.event_type !== 'away') {
-    console.log('task')
-    console.log(req.body)
-    // console.log(foo)
     Event.findOne({person : req.body.person, date_range: req.body.start}, function(err, data){
-      if(err){
-          res.send(err);
-      }
-      console.log('data');
-      console.log(data);
-      console.log('end')
-      if(!data) {
-        console.log('data0')
-        let new_event = new Event(req.body);
-        new_event.save(function(err, event) {
-          if (err)
-            res.send(err);
-          res.json(event);
-        });
-        }else{
-          res.send({'error': 'Not created. Person is away'});
-        }
+      if(err){res.send(err)}
 
-    // console.log(data[0].name);
+      if(!data) {
+        let new_event = new Event(req.body)
+        new_event.save(function(err, event) {
+          if (err){
+            res.send(err)
+          }
+          res.json(event)
+        })
+      }else{
+        res.send({'error': 'Not created. Person is away'});
+      }
     })
+
   }else{
     let new_event = new Event(req.body);
     new_event.save(function(err, event) {
-      if (err)
-        res.send(err);
-      res.json(event);
+      if (err){
+        res.send(err)
+      }
+      res.json(event)
     });
   }
-
-  // console.log('reqbody')
-  // console.log(req.body)
-
 
 };
 
