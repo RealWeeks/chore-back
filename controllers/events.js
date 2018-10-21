@@ -1,5 +1,11 @@
+
 const mongoose = require('mongoose')
 const Event = mongoose.model('Events')
+
+const Moment = require('moment');
+const MomentRange = require('moment-range');
+
+const moment = MomentRange.extendMoment(Moment);
 
 exports.get_events = function(req, res) {
   Event.find({}, function(err, event) {
@@ -10,12 +16,33 @@ exports.get_events = function(req, res) {
 };
 
 exports.create_event = function(req, res) {
-  let new_event = new Event(req.body);
-  new_event.save(function(err, event) {
-    if (err)
-      res.send(err);
-    res.json(event);
-  });
+  if (req.body.event_type !== 'away') {
+    Event.findOne({person : req.body.person, date_range: req.body.start}, function(err, data){
+      if(err){res.send(err)}
+
+      if(!data) {
+        let new_event = new Event(req.body)
+        new_event.save(function(err, event) {
+          if (err){
+            res.send(err)
+          }
+          res.json(event)
+        })
+      }else{
+        res.send({'error': 'Not created. Person is away'});
+      }
+    })
+
+  }else{
+    let new_event = new Event(req.body);
+    new_event.save(function(err, event) {
+      if (err){
+        res.send(err)
+      }
+      res.json(event)
+    });
+  }
+
 };
 
 
