@@ -11,7 +11,9 @@ const port = process.env.PORT || 3000
 const mongoose = require('mongoose')
 
 const Event = require('./models/Event')
+const User = require('./models/User')
 const bodyParser = require('body-parser')
+const session = require('express-session');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/Caldb');
@@ -19,6 +21,8 @@ mongoose.connect('mongodb://localhost/Caldb');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+
+app.use(session({ secret: 'passport-secret', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 
 const routes = require('./routes/events')
