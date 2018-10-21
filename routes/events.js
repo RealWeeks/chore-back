@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = (app) => {
   const Events = require('../controllers/events');
 
   app.route('/events')
