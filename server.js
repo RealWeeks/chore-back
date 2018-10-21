@@ -12,6 +12,7 @@ const mongoose = require('mongoose')
 
 const Event = require('./models/Event')
 const User = require('./models/User')
+require('./config/passport')
 const bodyParser = require('body-parser')
 const session = require('express-session');
 
