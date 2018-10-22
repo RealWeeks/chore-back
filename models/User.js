@@ -40,6 +40,7 @@ UserSchema.methods.validatePassword = (password) => {
 }
 
 UserSchema.methods.generateJWT = () => {
+  console.log('jasonauth')
   const today = new Date()
   const expirationDate = new Date(today)
   expirationDate.setDate(today.getDate() + 60)
@@ -51,12 +52,12 @@ UserSchema.methods.generateJWT = () => {
   }, 'secret')
 }
 
-UserSchema.methods.toAuthJSON = () => {
+UserSchema.methods.toAuthJSON = function() {
   return {
     _id: this._id,
     email: this.email,
     token: this.generateJWT(),
-  }
-}
+  };
+};
 
 mongoose.model('Users', UserSchema)

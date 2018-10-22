@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 app.use(session({ secret: 'passport-secret', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 
-const routes = require('./routes/events')
+const routes = require('./routes/index')
 
 app.use(expressWinston.logger({
      transports: [
