@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const winston = require('winston')
 const expressWinston = require('express-winston')
+const path = require('path')
 
 app.use(cors())
 
@@ -20,10 +21,11 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/Caldb');
 
 
-app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-app.use(session({ secret: 'passport-secret', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 
 const routes = require('./routes/index')
@@ -43,7 +45,7 @@ app.use(expressWinston.logger({
      ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or response
    }));
 
-routes(app)
+
 
 app.use(expressWinston.errorLogger({
       transports: [
@@ -57,6 +59,8 @@ app.use(expressWinston.errorLogger({
 
 
 app.listen(port);
+
+routes(app)
 
 
 console.log('Port: ' + port);

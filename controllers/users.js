@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const passport = require('passport')
 const Users = mongoose.model('Users')
-const auth = require('../routes/auth')
+// const auth = require('../routes/auth')
 
 
 exports.set_user = (req, res, next ) =>{
@@ -76,6 +76,12 @@ exports.login_user = (req, res, next ) =>{
 
 //GET current route (required, only authenticated users have access)
 exports.current_user = (req, res, next ) =>{
+  console.log('reqpayload')
+  console.log(req)
+  console.log(req.body)
+  console.log(req.params)
+  console.log(req.payload)
+  console.log(req.user)
   const { payload: { id } } = req
 
   return Users.findById(id)
@@ -85,5 +91,5 @@ exports.current_user = (req, res, next ) =>{
       }
 
       return res.json({ user: user.toAuthJSON() })
-    })
+    })(req, res, next)
 }
