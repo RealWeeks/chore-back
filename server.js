@@ -1,34 +1,20 @@
 const express = require('express')
-const app = express()
 const cors = require('cors')
 const winston = require('winston')
 const expressWinston = require('express-winston')
 const path = require('path')
-
-app.use(cors())
-
-const port = process.env.PORT || 3000
-
-const mongoose = require('mongoose')
-
-const Event = require('./models/Event')
-const User = require('./models/User')
-require('./config/passport')
 const bodyParser = require('body-parser')
 const session = require('express-session');
+const mongoose = require('mongoose')
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/Caldb');
 
+const app = express()
 
-// app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
-
 app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
-
-
-const routes = require('./routes/index')
 
 app.use(expressWinston.logger({
      transports: [
@@ -45,6 +31,17 @@ app.use(expressWinston.logger({
      ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or response
    }));
 
+const port = process.env.PORT || 3000
+
+mongoose.connect('mongodb://localhost/Caldb');
+
+const Event = require('./models/Event')
+const User = require('./models/User')
+require('./config/passport')
+
+
+
+
 
 
 app.use(expressWinston.errorLogger({
@@ -60,6 +57,7 @@ app.use(expressWinston.errorLogger({
 
 app.listen(port);
 
+const routes = require('./routes/index')
 routes(app)
 
 

@@ -23,6 +23,13 @@ module.exports = (app) => {
   app.route('/login')
     .post(Users.login_user, auth.optional);
 
-  app.route('/current')
-    .get(Users.current_user, auth.required);
+  // app.route('/current')
+  //   // .get(Users.current_user, auth.required);
+  //   .get(auth.required, Users.current_user);
+
+  app.get('/current', auth.required, Users.current_user)
+//   app.get('/current', auth.required, (req, res) => {
+//     console.log(req)
+//     res.send('Authenticated');
+// });
 };

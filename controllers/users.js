@@ -75,21 +75,24 @@ exports.login_user = (req, res, next ) =>{
 }
 
 //GET current route (required, only authenticated users have access)
-exports.current_user = (req, res, next ) =>{
-  console.log('reqpayload')
-  console.log(req)
-  console.log(req.body)
-  console.log(req.params)
-  console.log(req.payload)
-  console.log(req.user)
-  const { payload: { id } } = req
+exports.current_user = (req, res, next, id ) =>{
+  console.log('belowpayload')
+  // console.log(req)
+  // console.log(req.user)
+console.log(id)
+  // const { payload: { id } } = req
+  console.log('payload above')
+  console.log(id)
+  // console.log(req)
+  // console.log(id)
 
   return Users.findById(id)
     .then((user) => {
       if(!user) {
+        console.log('nouser')
         return res.sendStatus(400)
       }
 
       return res.json({ user: user.toAuthJSON() })
-    })(req, res, next)
+    })
 }
